@@ -13,7 +13,7 @@ The project uses the public **Google Analytics 4 (GA4) Google Merchandise Store 
 <img width="1900" height="964" alt="Captura de pantalla 2026-08-22 211210" src="https://github.com/user-attachments/assets/8cc0b4f2-408c-4978-8f19-3242c4c59983" />
 <img width="1369" height="795" alt="Captura de pantalla 2026-08-22 211238" src="https://github.com/user-attachments/assets/1a8de822-7878-4835-bed7-f4ffe20c5ad9" />
 
-> **Interactive version:** [Open Live Dashboard](TU_LINK_GITHUB_PAGES)
+> **Interactive version:** [Open Live Dashboard](https://dbolanos-s.github.io/product_ux_analysis/)
 
 ---
 
