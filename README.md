@@ -4,7 +4,7 @@ End-to-end **Product Analytics and UX Research project** focused on understandin
 
 The project uses the public **Google Analytics 4 (GA4) Google Merchandise Store dataset**, processed with **Google BigQuery and SQL**, analyzed with **Python and Pandas**, and presented through an interactive web dashboard.
 
-[Live Dashboard](TU_LINK_GITHUB_PAGES) • [Analysis Notebook](notebooks/01_product_ux_analysis.ipynb) • [SQL Queries](sql/)
+[Live Dashboard](https://dbolanos-s.github.io/product_ux_analysis/) • [Analysis Notebook](https://colab.research.google.com/drive/1uwRkgZAmZs1LaEksH7a1Vf6ZDwSpjXrc?authuser=2) • [SQL Queries](sql/)
 
 ---
 
@@ -480,7 +480,7 @@ The notebook contains:
 
 The complete notebook is available here:
 
-[Open Analysis Notebook](notebooks/01_product_ux_analysis.ipynb)
+[Open Analysis Notebook](https://colab.research.google.com/drive/1uwRkgZAmZs1LaEksH7a1Vf6ZDwSpjXrc?authuser=2)
 
 ---
 
@@ -530,39 +530,6 @@ product_ux_analysis/
 ├── README.md
 └── .gitignore
 ```
-
----
-
-# Running the Dashboard Locally
-
-Clone the repository:
-
-```bash
-git clone https://github.com/TU_USUARIO/product_ux_analysis.git
-```
-
-Enter the project directory:
-
-```bash
-cd product_ux_analysis
-```
-
-Start a local HTTP server:
-
-```bash
-python -m http.server 8000
-```
-
-Then open:
-
-```text
-http://localhost:8000
-```
-
-A local HTTP server is required because the dashboard loads CSV files dynamically through JavaScript.
-
----
-
 # Deployment
 
 The project can be deployed directly with **GitHub Pages**.
