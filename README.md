@@ -1,67 +1,84 @@
 # Product & UX Analytics — Google Merchandise Store
 
-End-to-end **Product Analytics and UX Research project** focused on understanding e-commerce user behavior, conversion funnels, acquisition, product performance, and retention.
+Proyecto end-to-end de **Product Analytics y análisis cuantitativo de UX**, enfocado en comprender el comportamiento de usuarios de e-commerce, funnels de conversión, adquisición, desempeño de productos y retención.
 
-The project uses the public **Google Analytics 4 (GA4) Google Merchandise Store dataset**, processed with **Google BigQuery and SQL**, analyzed with **Python and Pandas**, and presented through an interactive web dashboard.
+El proyecto utiliza el dataset público de **Google Analytics 4 (GA4) de Google Merchandise Store**, procesado mediante **Google BigQuery y SQL**, analizado con **Python y Pandas**, y presentado mediante un dashboard web interactivo.
 
-[Live Dashboard](https://dbolanos-s.github.io/product_ux_analysis/) • [Analysis Notebook](https://colab.research.google.com/drive/1uwRkgZAmZs1LaEksH7a1Vf6ZDwSpjXrc?authuser=2) • [SQL Queries](sql/)
-
----
-
-## Dashboard Preview
-
-<img width="1900" height="964" alt="Captura de pantalla 2026-08-22 211210" src="https://github.com/user-attachments/assets/8cc0b4f2-408c-4978-8f19-3242c4c59983" />
-<img width="1369" height="795" alt="Captura de pantalla 2026-08-22 211238" src="https://github.com/user-attachments/assets/1a8de822-7878-4835-bed7-f4ffe20c5ad9" />
-
-> **Interactive version:** [Open Live Dashboard](https://dbolanos-s.github.io/product_ux_analysis/)
+[Dashboard en vivo](https://dbolanos-s.github.io/product_ux_analysis/) · [Notebook de análisis](https://colab.research.google.com/drive/1uwRkgZAmZs1LaEksH7a1Vf6ZDwSpjXrc?authuser=2) · [Consultas SQL](sql/)
 
 ---
 
-## Project Overview
+# Vista previa del dashboard
 
-The purpose of this project is to analyze how users move through an e-commerce purchase journey and identify behavioral patterns related to:
+<img width="1900" height="964" alt="Dashboard Product & UX Analytics" src="https://github.com/user-attachments/assets/8cc0b4f2-408c-4978-8f19-3242c4c59983" />
 
-- conversion;
-- acquisition;
-- device performance;
-- product behavior;
-- retention;
-- cohort performance.
+<img width="1369" height="795" alt="Dashboard Product & UX Analytics" src="https://github.com/user-attachments/assets/1a8de822-7878-4835-bed7-f4ffe20c5ad9" />
 
-The project goes beyond simple KPI reporting by using behavioral data to identify **friction points, anomalies, and areas that warrant further Product or UX investigation**.
-
-The complete workflow combines:
-
-**BigQuery → SQL → CSV → Python → Jupyter Notebook → Interactive Dashboard**
+> **Versión interactiva:** [Abrir dashboard en vivo](https://dbolanos-s.github.io/product_ux_analysis/)
 
 ---
 
-## Research Questions
+# Descripción general del proyecto
 
-The analysis addresses the following questions:
+El propósito de este proyecto es analizar cómo los usuarios avanzan a través del journey de compra de un e-commerce e identificar patrones de comportamiento relacionados con:
 
-1. **Where does the largest drop-off occur in the purchase funnel?**
-2. **Does conversion behavior differ across devices?**
-3. **Which traffic sources generate the highest volume and which generate stronger conversion?**
-4. **Which products show high user interest but unusually low final conversion?**
-5. **How quickly does user retention decline after the first interaction?**
-6. **Which monthly cohorts demonstrate stronger retention?**
+- conversión;
+- adquisición;
+- desempeño por dispositivo;
+- comportamiento de productos;
+- retención;
+- desempeño de cohortes.
+
+El proyecto va más allá de la presentación de KPIs al utilizar datos conductuales para identificar **posibles puntos de fricción, anomalías y áreas que requieren una investigación adicional de Producto o UX**.
+
+El flujo completo combina:
+
+```text
+Google Analytics 4
+        ↓
+Google BigQuery
+        ↓
+Consultas SQL
+        ↓
+Datasets analíticos CSV
+        ↓
+Python / Pandas
+        ↓
+Análisis exploratorio y de investigación
+        ↓
+Dashboard interactivo
+        ↓
+Insights de Producto y UX
+```
 
 ---
 
-## Dataset
+# Preguntas de investigación
 
-The analysis uses the public **GA4 sample e-commerce dataset from the Google Merchandise Store**.
+El análisis busca responder las siguientes preguntas:
 
-**Period analyzed:** November 1, 2020 – January 31, 2021
+1. **¿En qué etapa del funnel de compra ocurre el mayor abandono?**
+2. **¿El comportamiento de conversión difiere entre dispositivos?**
+3. **¿Qué fuentes de tráfico generan mayor volumen y cuáles presentan mejores tasas de conversión?**
+4. **¿Qué productos presentan alto interés de usuarios pero una conversión final inusualmente baja?**
+5. **¿Qué tan rápido disminuye la retención después de la primera interacción?**
+6. **¿Qué cohortes mensuales presentan un mejor comportamiento de retención?**
 
-Initial exploration identified:
+---
 
-- **4,295,584 events**
-- **270,154 unique users**
-- **92 days of activity**
+# Dataset
 
-Relevant GA4 events include:
+El análisis utiliza el dataset público de e-commerce de **Google Analytics 4 de Google Merchandise Store**.
+
+**Periodo analizado:** 1 de noviembre de 2020 – 31 de enero de 2021
+
+La exploración inicial identificó:
+
+- **4,295,584 eventos**
+- **270,154 usuarios únicos**
+- **92 días de actividad**
+
+Entre los eventos relevantes de GA4 se encuentran:
 
 - `page_view`
 - `user_engagement`
@@ -78,40 +95,42 @@ Relevant GA4 events include:
 - `add_payment_info`
 - `purchase`
 
-The original event-level dataset was queried directly in **Google BigQuery**.
+El dataset original a nivel de eventos fue consultado directamente desde **Google BigQuery**.
 
 ---
 
-## Project Workflow
+# Flujo de trabajo
 
 ```text
-GA4 Public Dataset
+Dataset público GA4
         ↓
 Google BigQuery
         ↓
-SQL Data Extraction
+Extracción mediante SQL
         ↓
-Aggregated Analytical CSVs
+Datasets analíticos agregados
         ↓
 Python / Pandas
         ↓
-Exploratory & Research Analysis
+Análisis exploratorio
         ↓
-Interactive HTML Dashboard
+Interpretación de resultados
         ↓
-Product & UX Insights
+Dashboard web interactivo
+        ↓
+Insights de Producto y UX
 ```
 
 ---
 
-## Technologies
+# Tecnologías utilizadas
 
-### Data Querying
+## Consulta y procesamiento de datos
 
 - Google BigQuery
 - SQL
 
-### Data Analysis
+## Análisis de datos
 
 - Python
 - Pandas
@@ -119,7 +138,7 @@ Product & UX Insights
 - Jupyter Notebook
 - Matplotlib
 
-### Dashboard Development
+## Desarrollo del dashboard
 
 - HTML5
 - CSS3
@@ -127,7 +146,7 @@ Product & UX Insights
 - Chart.js
 - Papa Parse
 
-### Version Control & Deployment
+## Control de versiones y despliegue
 
 - Git
 - GitHub
@@ -135,11 +154,11 @@ Product & UX Insights
 
 ---
 
-# Key Findings
+# Principales hallazgos
 
-## 1. Conversion Funnel
+## 1. Funnel de conversión
 
-The purchase funnel was defined as:
+El funnel de compra fue definido como:
 
 ```text
 Product View
@@ -151,86 +170,96 @@ Checkout
 Purchase
 ```
 
-### Funnel Results
+### Resultados del funnel
 
-| Funnel Stage | Unique Users |
+| Etapa | Usuarios únicos |
 |---|---:|
 | Product View | 61,252 |
 | Add to Cart | 12,545 |
 | Checkout | 9,715 |
 | Purchase | 4,419 |
 
-The overall **Product View → Purchase conversion rate** was:
+La tasa global de conversión:
+
+**Product View → Purchase**
+
+fue de:
 
 **7.21%**
 
-### Stage Performance
+### Desempeño por etapa
 
-| Transition | Conversion Rate | Drop-off |
+| Transición | Tasa de conversión | Drop-off |
 |---|---:|---:|
 | Product View → Add to Cart | 20.48% | **79.52%** |
 | Add to Cart → Checkout | 77.44% | **22.56%** |
 | Checkout → Purchase | 45.49% | **54.51%** |
 
-### Finding
+### Hallazgo
 
-The largest observed drop-off occurs between:
+El mayor abandono observado ocurre entre:
 
 **Product View → Add to Cart**
 
-with a **79.52% drop-off**.
+con un **drop-off de 79.52%**.
 
-A second substantial loss occurs between:
+Una segunda pérdida relevante ocurre entre:
 
 **Checkout → Purchase**
 
-with a **54.51% drop-off**.
+con un **drop-off de 54.51%**.
 
-These two stages represent priority areas for further Product and UX investigation.
+Estas dos etapas representan áreas prioritarias para una investigación posterior de Producto y UX.
+
+> Los datos permiten identificar **dónde** ocurre una pérdida importante de usuarios, pero no permiten concluir directamente **por qué** ocurre.
 
 ---
 
-## 2. Device Performance
+# 2. Desempeño por dispositivo
 
-Conversion behavior was compared across:
+El comportamiento de conversión fue comparado entre:
 
 - Mobile
 - Desktop
 - Tablet
 
-### Overall Conversion Rate
+### Tasa de conversión general
 
-| Device | Conversion Rate |
+| Dispositivo | Tasa de conversión |
 |---|---:|
 | Mobile | **7.46%** |
 | Desktop | **7.00%** |
 | Tablet | **6.72%** |
 
-### Finding
+### Hallazgo
 
-The initial descriptive hypothesis expected Mobile users to have a lower conversion rate than Desktop users.
+La hipótesis descriptiva inicial esperaba que los usuarios Mobile presentaran una menor conversión que los usuarios Desktop.
 
-However, the observed data showed the opposite:
+Sin embargo, los datos observados mostraron lo contrario:
 
-**Mobile presented the highest observed conversion rate at 7.46%.**
+**Mobile presentó la tasa de conversión observada más alta, con 7.46%.**
 
-The difference between Mobile and Desktop is relatively small and should be interpreted descriptively rather than as statistically significant without user-level sequential funnel data.
+La diferencia entre Mobile y Desktop es relativamente pequeña.
+
+Por esta razón, se interpreta como un resultado **descriptivo** y no como una diferencia estadísticamente significativa.
+
+Para realizar una comparación inferencial más rigurosa sería necesario trabajar con datos a nivel de usuario y un funnel secuencial correctamente definido.
 
 ---
 
-## 3. Traffic Source Analysis
+# 3. Análisis de fuentes de tráfico
 
-Traffic sources were evaluated using:
+Las fuentes de tráfico fueron evaluadas utilizando:
 
-- Product viewers
-- Add-to-cart users
-- Checkout users
-- Purchasers
-- Conversion rate
+- Product Viewers;
+- usuarios Add-to-Cart;
+- usuarios que iniciaron Checkout;
+- compradores;
+- tasa de conversión.
 
-### Main Traffic Sources
+### Principales fuentes de tráfico
 
-| Traffic Source | Product Viewers | Purchasers | Conversion Rate |
+| Fuente | Product Viewers | Compradores | Tasa de conversión |
 |---|---:|---:|---:|
 | `(data deleted)` | 4,924 | 680 | 13.81% |
 | `shop.googlemerchandisestore.com` | 6,180 | 568 | 9.19% |
@@ -238,38 +267,38 @@ Traffic sources were evaluated using:
 | `<Other>` | 19,201 | 1,063 | 5.54% |
 | `google` | 25,105 | 1,377 | 5.48% |
 
-### Finding
+### Hallazgo
 
-`google` generated the **largest volume of product viewers**, but did not produce the highest final conversion rate.
+`google` generó el **mayor volumen de usuarios que visualizaron productos**, pero no presentó la tasa de conversión final más alta.
 
-This highlights an important distinction between:
+Esto permite distinguir entre:
 
-**Traffic Volume**
+```text
+Volumen de adquisición
+        ≠
+Calidad de conversión
+```
 
-and
+Una fuente de tráfico puede atraer una gran cantidad de usuarios sin necesariamente producir un comportamiento de compra proporcionalmente superior.
 
-**Traffic Conversion Quality**
-
-A high acquisition volume does not necessarily imply stronger downstream purchasing behavior.
-
-The `(data deleted)` source was treated cautiously because its original acquisition source is unavailable.
+La categoría `(data deleted)` debe interpretarse con cautela debido a que la fuente de adquisición original no está disponible.
 
 ---
 
-## 4. Product Anomaly Analysis
+# 4. Análisis de anomalías de productos
 
-Products were analyzed using:
+Los productos fueron analizados utilizando:
 
-- unique viewers;
-- cart users;
-- buyers;
-- average price;
-- units purchased;
+- usuarios únicos que visualizaron el producto;
+- usuarios que agregaron al carrito;
+- compradores;
+- precio promedio;
+- unidades compradas;
 - revenue;
-- View-to-Cart rate;
-- final conversion rate.
+- View-to-Cart Rate;
+- tasa de conversión final.
 
-Products were flagged using the following criteria:
+Se definieron los siguientes criterios para identificar productos que merecen investigación adicional:
 
 ```text
 viewers >= 1000
@@ -277,41 +306,57 @@ view_to_cart_rate >= 20%
 conversion_rate <= 1%
 ```
 
-Approximately **84 products** met these criteria.
+Aproximadamente **84 productos** cumplieron estos criterios.
 
-Several products showed:
+Algunos productos presentaron:
 
-- thousands of product views;
-- strong Add-to-Cart activity;
-- extremely low final conversion;
-- in some cases, zero recorded buyers.
+- miles de visualizaciones;
+- fuerte actividad de Add-to-Cart;
+- conversión final extremadamente baja;
+- en algunos casos, cero compradores registrados.
 
-### Interpretation
+### Interpretación
 
-These patterns warrant further investigation into possible factors such as:
+Estos patrones justifican una investigación adicional sobre factores como:
 
-- product availability;
-- variants;
-- pricing;
-- analytics instrumentation;
-- post-cart friction.
+- disponibilidad;
+- variantes;
+- precios;
+- instrumentación analítica;
+- fricción después de agregar al carrito.
 
-However, the available behavioral data do **not establish the cause** of these anomalies.
+Sin embargo, los datos conductuales disponibles **no permiten establecer la causa** de estas anomalías.
+
+Por ejemplo:
+
+```text
+Alta intención
++
+Baja compra
+```
+
+no demuestra automáticamente:
+
+```text
+Problema UX
+```
+
+Se requiere evidencia adicional.
 
 ---
 
-## 5. User Retention
+# 5. Retención de usuarios
 
-Exact-day retention was measured for:
+Se calculó retención exacta para:
 
 - D1
 - D7
 - D14
 - D30
 
-### Results
+### Resultados
 
-| Period | Retained Users | Retention Rate |
+| Periodo | Usuarios retenidos | Tasa de retención |
 |---|---:|---:|
 | D0 | 270,154 | 100.00% |
 | D1 | 12,538 | **4.64%** |
@@ -319,53 +364,69 @@ Exact-day retention was measured for:
 | D14 | 934 | **0.35%** |
 | D30 | 322 | **0.12%** |
 
-### Finding
+### Hallazgo
 
-User activity declines sharply after the first interaction.
+La actividad de usuarios disminuye rápidamente después de la primera interacción.
 
-The largest reduction occurs immediately after D0, with only **4.64% of users active exactly on D1**.
+La mayor reducción ocurre inmediatamente después de D0:
 
-Retention continues to decrease across longer observation periods.
+**solo 4.64% de los usuarios estuvieron activos exactamente en D1.**
+
+La retención continúa disminuyendo a medida que aumenta la ventana temporal.
 
 ---
 
-## 6. Monthly Cohort Analysis
+# 6. Análisis de cohortes mensuales
 
-Users were grouped according to the month of their first recorded activity.
+Los usuarios fueron agrupados según el mes de su primera actividad registrada.
 
-### November 2020 Cohort
+## Cohorte de noviembre de 2020
 
-- Cohort size: **79,421 users**
-- M1 retention: **5.86%**
-- M2 retention: **1.52%**
+- Tamaño de la cohorte: **79,421 usuarios**
+- Retención M1: **5.86%**
+- Retención M2: **1.52%**
 
-### December 2020 Cohort
+## Cohorte de diciembre de 2020
 
-- Cohort size: **99,664 users**
-- M1 retention: **2.53%**
+- Tamaño de la cohorte: **99,664 usuarios**
+- Retención M1: **2.53%**
 
-### January 2021 Cohort
+## Cohorte de enero de 2021
 
-- Cohort size: **91,069 users**
-- M1 retention cannot be evaluated because the dataset ends in January 2021.
+- Tamaño de la cohorte: **91,069 usuarios**
+- No es posible evaluar M1 porque el dataset termina en enero de 2021.
 
-### Finding
+### Hallazgo
 
-The **November 2020 cohort demonstrated stronger next-month retention** than the December cohort.
+La cohorte de **noviembre de 2020 presentó una mayor retención al siguiente mes** que la cohorte de diciembre.
 
-Because the dataset ends in January 2021, all cohorts do not have equivalent observation windows.
+Sin embargo, las cohortes no poseen ventanas de observación equivalentes.
+
+Por esta razón, los periodos no observados no deben interpretarse como:
+
+```text
+0% de retención
+```
+
+sino como:
+
+```text
+Periodo no disponible
+```
 
 ---
 
 # Dashboard
 
-The interactive dashboard is divided into four analytical sections.
+El dashboard interactivo está dividido en cuatro secciones analíticas.
+
+---
 
 ## 1. Executive Overview
 
-Provides a high-level view of the e-commerce funnel.
+Presenta una visión general del funnel de compra.
 
-Includes:
+Incluye:
 
 - Product Viewers
 - Add to Cart
@@ -376,29 +437,43 @@ Includes:
 - Funnel Drop-off Analysis
 - Key Insight
 
+Esta sección permite identificar rápidamente las etapas con mayores pérdidas de usuarios.
+
 ---
 
 ## 2. Acquisition & Devices
 
-Analyzes behavioral differences across acquisition channels and devices.
+Analiza diferencias de comportamiento según dispositivo y fuente de adquisición.
 
-Includes:
+Incluye:
 
-- Mobile conversion
-- Desktop conversion
-- Tablet conversion
+- Mobile Conversion
+- Desktop Conversion
+- Tablet Conversion
 - Conversion Rate by Device
 - Funnel Performance by Device
 - Traffic Volume by Source
 - Conversion Rate by Traffic Source
 
+Esta página permite diferenciar entre:
+
+```text
+Volumen de tráfico
+```
+
+y:
+
+```text
+Calidad de conversión
+```
+
 ---
 
 ## 3. Product Analysis
 
-Focuses on products that generate strong interest but unusually low purchasing activity.
+Se enfoca en productos que generan un alto nivel de interés pero una actividad de compra inusualmente baja.
 
-Includes:
+Incluye:
 
 - Flagged Products
 - Products with Zero Buyers
@@ -408,15 +483,17 @@ Includes:
 - View-to-Cart Rate
 - Conversion Rate
 - Interest vs Final Conversion
-- Product-level anomaly table
+- tabla detallada de anomalías
+
+El objetivo no es concluir automáticamente que existe un problema de UX, sino identificar productos que requieren investigación adicional.
 
 ---
 
 ## 4. Retention & Cohorts
 
-Analyzes whether users return after their first interaction.
+Analiza si los usuarios regresan después de su primera interacción.
 
-Includes:
+Incluye:
 
 - D1 Retention
 - D7 Retention
@@ -426,78 +503,129 @@ Includes:
 - Monthly Cohort Analysis
 - Cohort Retention Matrix
 
----
-
-# Methodology
-
-The analysis followed four main stages.
-
-## 1. Data Exploration
-
-The original GA4 dataset was explored in Google BigQuery to identify:
-
-- event volume;
-- unique users;
-- observation period;
-- relevant e-commerce events.
+Esta sección permite estudiar tanto retención individual por día como diferencias entre cohortes.
 
 ---
 
-## 2. SQL Data Extraction
+# Metodología
 
-Six analytical datasets were created through SQL:
-
-1. General conversion funnel
-2. Funnel by device
-3. Traffic source performance
-4. Product anomalies
-5. Exact-day retention
-6. Monthly cohort retention
-
-The SQL queries are available in the [`sql/`](sql/) directory.
+El análisis siguió cuatro etapas principales.
 
 ---
 
-## 3. Python Analysis
+## 1. Exploración de datos
 
-The exported CSV datasets were analyzed using:
+El dataset original de GA4 fue explorado en Google BigQuery para identificar:
+
+- volumen de eventos;
+- usuarios únicos;
+- periodo de observación;
+- eventos relevantes de e-commerce.
+
+Esta etapa permitió comprender la estructura del dataset antes de construir las consultas analíticas.
+
+---
+
+## 2. Extracción de datos mediante SQL
+
+Se construyeron seis datasets analíticos mediante SQL:
+
+1. Funnel general de conversión
+2. Funnel por dispositivo
+3. Desempeño por fuente de tráfico
+4. Anomalías de productos
+5. Retención por día
+6. Retención por cohortes
+
+Las consultas están disponibles en:
+
+[`sql/`](sql/)
+
+La estructura es:
+
+```text
+sql/
+├── 01_funnel_general.sql
+├── 02_funnel_device.sql
+├── 03_traffic_sources.sql
+├── 04_product_anomalies.sql
+├── 05_retention_days.sql
+└── 06_cohort_retention.sql
+```
+
+---
+
+# 3. Análisis con Python
+
+Los datasets exportados fueron analizados utilizando:
 
 - Pandas
 - NumPy
 - Matplotlib
+- Jupyter Notebook
 
-The notebook contains:
+El notebook contiene:
 
-- data validation;
-- funnel analysis;
-- device analysis;
-- traffic acquisition analysis;
-- product anomaly analysis;
-- retention analysis;
-- cohort analysis;
-- interpretation of findings;
-- research limitations.
+- validación de datos;
+- análisis del funnel;
+- análisis por dispositivo;
+- análisis de adquisición;
+- análisis de productos;
+- análisis de retención;
+- análisis de cohortes;
+- interpretación de resultados;
+- limitaciones metodológicas;
+- conclusiones.
 
-The complete notebook is available here:
+Notebook completo:
 
-[Open Analysis Notebook](https://colab.research.google.com/drive/1uwRkgZAmZs1LaEksH7a1Vf6ZDwSpjXrc?authuser=2)
+[Ver notebook en Google Colab](https://colab.research.google.com/drive/1uwRkgZAmZs1LaEksH7a1Vf6ZDwSpjXrc?authuser=2)
 
----
+También se encuentra dentro del repositorio:
 
-## 4. Interactive Dashboard
-
-The analytical datasets are loaded directly into the web dashboard using JavaScript and Papa Parse.
-
-The dashboard was designed to provide a concise and interactive representation of the principal findings.
+[`notebooks/01_product_ux_analysis.ipynb`](notebooks/01_product_ux_analysis.ipynb)
 
 ---
 
-# Repository Structure
+# 4. Dashboard interactivo
+
+Los datasets analíticos son cargados directamente por el dashboard utilizando JavaScript y Papa Parse.
+
+La arquitectura es:
+
+```text
+CSV analíticos
+      ↓
+JavaScript
+      ↓
+Procesamiento de datos
+      ↓
+Chart.js
+      ↓
+Dashboard interactivo
+```
+
+Esto evita escribir manualmente los resultados principales dentro de las visualizaciones.
+
+El objetivo del dashboard es presentar los resultados del análisis de una forma:
+
+- clara;
+- interactiva;
+- orientada a Producto;
+- útil para comunicar findings;
+- accesible desde el navegador.
+
+---
+
+# Estructura del repositorio
 
 ```text
 product_ux_analysis/
 │
 ├── index.html
+│
+├── README.md
+├── .gitignore
 │
 ├── css/
 │   └── styles.css
@@ -524,19 +652,51 @@ product_ux_analysis/
 │   ├── 05_retention_days.sql
 │   └── 06_cohort_retention.sql
 │
-├── images/
-│   └── dashboard-preview.png
-│
-├── README.md
-└── .gitignore
+└── images/
+    └── dashboard-preview.png
 ```
-# Deployment
 
-The project can be deployed directly with **GitHub Pages**.
+---
 
-### GitHub Pages Configuration
+# Ejecución local
 
-Go to:
+Clonar el repositorio:
+
+```bash
+git clone https://github.com/dbolanos-s/product_ux_analysis.git
+```
+
+Entrar al proyecto:
+
+```bash
+cd product_ux_analysis
+```
+
+Ejecutar un servidor HTTP:
+
+```bash
+python -m http.server 8000
+```
+
+Abrir en el navegador:
+
+```text
+http://localhost:8000
+```
+
+> No se recomienda abrir `index.html` directamente mediante `file://`, ya que el navegador puede bloquear la carga local de archivos CSV mediante `fetch()`.
+
+---
+
+# Despliegue
+
+El proyecto está desplegado mediante **GitHub Pages**.
+
+Dashboard público:
+
+[https://dbolanos-s.github.io/product_ux_analysis/](https://dbolanos-s.github.io/product_ux_analysis/)
+
+La configuración utilizada es:
 
 ```text
 Repository
@@ -546,108 +706,138 @@ Repository
 → Deploy from a branch
 ```
 
-Select:
+Configuración:
 
 ```text
 Branch: main
 Folder: / (root)
 ```
 
-The deployed dashboard will be available at a URL similar to:
+---
+
+# Limitaciones de la investigación
+
+Los resultados deben interpretarse considerando varias limitaciones metodológicas.
+
+---
+
+## Datos agregados
+
+El dashboard utiliza datasets agregados generados desde BigQuery y no el dataset completo a nivel de evento.
+
+Esto facilita la visualización y comunicación, pero limita determinados análisis a nivel individual.
+
+---
+
+## Definición del funnel
+
+El funnel inicial cuenta usuarios únicos asociados con cada evento.
+
+No exige estrictamente que un usuario haya realizado:
 
 ```text
-https://TU_USUARIO.github.io/product_ux_analysis/
+Product View
+→ Add to Cart
+→ Checkout
+→ Purchase
 ```
 
----
+en ese orden y dentro de la misma sesión.
 
-# Research Limitations
+Por esta razón, se interpreta como:
 
-Several limitations should be considered when interpreting the findings.
+**funnel conductual agregado**
 
-### Aggregated Data
+y no como:
 
-The dashboard uses aggregated datasets generated from BigQuery rather than the original event-level data.
-
----
-
-### Funnel Definition
-
-The initial conversion funnel counts unique users associated with each event.
-
-It does **not enforce a strict ordered sequence within the same session**.
-
-Therefore, it should be interpreted as an aggregated behavioral funnel rather than a strict session-level funnel.
+**funnel secuencial estricto por sesión**.
 
 ---
 
-### Statistical Significance
+## Significancia estadística
 
-Device differences are descriptive.
+Las diferencias observadas por dispositivo son descriptivas.
 
-A formal statistical comparison would require user-level data and a strict sequential funnel definition.
-
----
-
-### Causality
-
-Observed behavioral patterns do not establish causal relationships.
-
-For example, a product with strong cart activity but low purchasing activity cannot automatically be interpreted as having:
-
-- a UX problem;
-- excessive pricing;
-- unavailable inventory.
-
-Additional research would be required.
+Una comparación inferencial más rigurosa requeriría datos a nivel de usuario y una definición secuencial consistente del funnel.
 
 ---
 
-### Retention Window
+## Causalidad
 
-The dataset contains approximately three months of activity.
+Los patrones observados no demuestran relaciones causales.
 
-Long-term retention analysis is therefore constrained by the available observation period.
+Por ejemplo, un producto que presenta:
 
----
+```text
+Alta actividad de carrito
++
+Baja actividad de compra
+```
 
-### Cohort Censoring
+no puede interpretarse automáticamente como evidencia de:
 
-The January 2021 cohort cannot be evaluated at M1 because no February data are available.
+- problemas UX;
+- precios excesivos;
+- falta de inventario;
+- errores técnicos.
 
-Missing cohort periods should therefore not be interpreted as 0% retention.
-
----
-
-# Potential Future Work
-
-Possible extensions include:
-
-- strict session-level funnel reconstruction;
-- user-level behavioral analysis;
-- statistical testing across devices;
-- cumulative retention analysis;
-- behavioral segmentation;
-- A/B testing;
-- product recommendation analysis;
-- conversion prediction;
-- customer journey analysis.
+Estas son posibles hipótesis que requieren investigación adicional.
 
 ---
 
-# Skills Demonstrated
+## Ventana de retención
 
-This project demonstrates practical experience with:
+El dataset contiene aproximadamente tres meses de actividad.
 
-### Data
+Por esta razón, el análisis de retención de largo plazo está limitado por el periodo disponible.
+
+---
+
+## Censura de cohortes
+
+La cohorte de enero de 2021 no puede evaluarse en M1 porque no existen datos de febrero.
+
+Los periodos faltantes deben interpretarse como:
+
+**no observados**
+
+y no como:
+
+**0% de retención**.
+
+---
+
+# Posibles extensiones
+
+El proyecto puede ampliarse mediante:
+
+- reconstrucción de funnel secuencial por sesión;
+- análisis conductual a nivel de usuario;
+- comparación estadística entre dispositivos;
+- análisis de duración de sesión;
+- retención acumulada;
+- segmentación conductual;
+- A/B Testing;
+- Customer Journey Mapping;
+- análisis de comportamiento antes del abandono;
+- integración de pruebas de usabilidad;
+- métricas SUS y CES;
+- modelos de predicción de conversión;
+- sistemas de recomendación de productos.
+
+---
+
+# Habilidades demostradas
+
+## Datos
 
 - Google BigQuery
 - SQL
-- Data Extraction
-- Data Transformation
-- Data Validation
+- Extracción de datos
+- Transformación de datos
+- Validación de datos
 
-### Analytics
+## Analytics
 
 - Product Analytics
 - Funnel Analysis
@@ -658,15 +848,16 @@ This project demonstrates practical experience with:
 - Behavioral Analysis
 - Product Anomaly Detection
 
-### Research
+## Research
 
-- Research Question Formulation
-- Hypothesis-Driven Analysis
-- Interpretation of Behavioral Data
-- Identification of Limitations
-- Avoidance of Unsupported Causal Claims
+- Formulación de preguntas de investigación
+- Análisis basado en hipótesis
+- Interpretación de datos conductuales
+- Identificación de limitaciones
+- Diferenciación entre evidencia y explicación
+- Prevención de conclusiones causales no respaldadas
 
-### Programming
+## Programación
 
 - Python
 - Pandas
@@ -675,64 +866,114 @@ This project demonstrates practical experience with:
 - HTML
 - CSS
 
-### Visualization
+## Visualización
 
 - Matplotlib
 - Chart.js
-- Interactive Dashboard Development
+- Desarrollo de dashboards interactivos
 
-### Engineering & Reproducibility
+## Ingeniería y reproducibilidad
 
 - Git
 - GitHub
 - GitHub Pages
-- Project Documentation
-- Reproducible Analysis Workflow
+- Documentación de proyectos
+- Flujos de análisis reproducibles
 
 ---
 
-# Project Summary
+# Resumen del proyecto
 
-This project demonstrates an end-to-end analytics workflow:
+Este proyecto demuestra un flujo completo de análisis:
 
 ```text
-Raw Behavioral Data
+Datos conductuales
         ↓
-SQL Analysis
+BigQuery + SQL
         ↓
-Analytical Datasets
+Datasets analíticos
         ↓
-Python Research Analysis
+Python / Pandas
         ↓
-Interactive Visualization
+Análisis de comportamiento
         ↓
-Product & UX Insights
+Visualización interactiva
+        ↓
+Insights de Producto y UX
 ```
 
-The main objective was not simply to create a dashboard, but to use behavioral data to identify relevant patterns, formulate research questions, and communicate findings while clearly distinguishing **observed evidence from possible explanations**.
+El objetivo principal no fue simplemente desarrollar un dashboard.
+
+El objetivo fue utilizar datos conductuales para:
+
+- formular preguntas de investigación;
+- identificar patrones relevantes;
+- localizar posibles puntos de fricción;
+- comparar segmentos;
+- analizar retención;
+- detectar anomalías;
+- comunicar resultados;
+- diferenciar evidencia observada de explicaciones causales.
 
 ---
 
-# Author
+# Conclusión
+
+Los datos permitieron identificar dos etapas particularmente relevantes del journey de compra:
+
+```text
+Product View
+→ Add to Cart
+```
+
+y:
+
+```text
+Checkout
+→ Purchase
+```
+
+debido a sus elevados niveles de abandono.
+
+También se identificaron:
+
+- diferencias descriptivas entre dispositivos;
+- diferencias entre volumen y calidad de fuentes de adquisición;
+- productos con alto interés pero baja conversión;
+- una fuerte disminución de retención después de la primera interacción;
+- diferencias entre cohortes mensuales.
+
+Sin embargo, los resultados no permiten concluir automáticamente cuáles son las causas de estos patrones.
+
+Por esta razón, el proyecto utiliza los datos principalmente para:
+
+> **identificar dónde investigar y qué preguntas formular**, en lugar de atribuir causas que el dataset no puede demostrar.
+
+Esta distinción entre **medición, interpretación y causalidad** es una parte central del enfoque del proyecto.
+
+---
+
+# Autora
 
 **Doménica Bolaños**
 
-Computer Science Student — ESPOL
+Estudiante de Ciencias de la Computación — ESPOL
 
-Areas of interest:
+Áreas de interés:
 
 - Data Science
 - Data Analytics
 - Machine Learning
 - Research
 - Product Analytics
+- UX / Product Research
 
 GitHub: [dbolanos-s](https://github.com/dbolanos-s)
 
 ---
 
-## Disclaimer
+# Disclaimer
 
-This project was developed for educational and portfolio purposes using the public Google Analytics 4 sample e-commerce dataset.
+Este proyecto fue desarrollado con fines educativos y de portafolio utilizando el dataset público de muestra de Google Analytics 4 para e-commerce.
 
-All findings represent analytical observations derived from the available data and should not be interpreted as causal claims.
+Todos los resultados corresponden a observaciones analíticas derivadas de los datos disponibles y **no deben interpretarse como relaciones causales sin evidencia adicional**.
