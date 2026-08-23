@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product & UX Analytics — Google Merchandise Store</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ REPORT HEADER (Power BI service chrome) ============ -->
+  <header class="report-header">
+    <div class="report-header__top">
+      <div class="report-header__left">
+        <div class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="report-breadcrumb">Workspaces&nbsp;/&nbsp;Portfolio&nbsp;Analytics&nbsp;/&nbsp;<b>Product &amp; UX Analytics.pbix</b></div>
+      </div>
+      <div class="report-header__right">
+        <span class="refresh-stamp" id="refreshStamp">Last refresh: —</span>
+        <button class="tool-btn" id="resetFiltersBtn" type="button">
+          <svg viewBox="0 0 16 16" class="tool-icon"><path d="M8 2a6 6 0 1 1-5.29 3.17.5.5 0 0 1 .88-.47A5 5 0 1 0 8 3v2.1a.4.4 0 0 1-.68.28L4.9 3.06a.4.4 0 0 1 0-.56L7.32.08A.4.4 0 0 1 8 .36V2z"/></svg>
+          Reset filters
+        </button>
+        <button class="tool-btn" id="exportBtn" type="button">
+          <svg viewBox="0 0 16 16" class="tool-icon"><path d="M8 1a.5.5 0 0 1 .5.5v7.79l2.15-2.15a.5.5 0 1 1 .7.71l-3 3a.5.5 0 0 1-.7 0l-3-3a.5.5 0 1 1 .7-.71L7.5 9.29V1.5A.5.5 0 0 1 8 1zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"/></svg>
+          Export
+        </button>
+      </div>
+    </div>
+    <div class="report-header__titles">
+      <div class="report-header__titles-main">
+        <h1 class="report-title">PRODUCT &amp; UX ANALYTICS</h1>
+        <p class="report-subtitle">Google Merchandise Store&nbsp;&nbsp;|&nbsp;&nbsp;Nov 2020 – Jan 2021</p>
+      </div>
+      <p class="report-desc">User behavior, conversion, acquisition and retention analysis based on GA4 e-commerce data.</p>
+    </div>
+  </header>
+
+  <!-- ============ STATUS / ERROR BANNER ============ -->
+  <div id="statusBanner" class="status-banner" hidden></div>
+
+  <!-- ============ REPORT CANVAS ============ -->
+  <main class="report-canvas" id="reportCanvas">
+
+    <!-- ===================== PAGE 1 — EXECUTIVE OVERVIEW ===================== -->
+    <section class="report-page" id="page-overview" data-page="overview">
+
+      <div class="kpi-row kpi-row--5">
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">Product Viewers</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body kpi-card">
+            <div class="kpi-value" id="kpiViewers">—</div>
+            <div class="kpi-caption">Users viewing products</div>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">Add to Cart</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body kpi-card">
+            <div class="kpi-value" id="kpiCart">—</div>
+            <div class="kpi-caption">Users who added to cart</div>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">Checkout</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body kpi-card">
+            <div class="kpi-value" id="kpiCheckout">—</div>
+            <div class="kpi-caption">Users who began checkout</div>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">Purchasers</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body kpi-card">
+            <div class="kpi-value" id="kpiPurchasers">—</div>
+            <div class="kpi-caption">Users who completed purchase</div>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">Conversion Rate</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body kpi-card kpi-card--accent">
+            <div class="kpi-value" id="kpiConversion">—</div>
+            <div class="kpi-caption">Product View → Purchase</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-row chart-row--funnel">
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">Conversion Funnel</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body">
+            <div class="funnel-chart" id="funnelChart"></div>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">Drop-off by Funnel Stage</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body">
+            <div class="chart-wrap"><canvas id="dropoffChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual visual--insight">
+        <div class="visual__header"><span class="visual__title">Key Insight</span></div>
+        <div class="visual__body">
+          <p class="insight-text" id="overviewInsight">Loading insight…</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================== PAGE 2 — ACQUISITION & DEVICES ===================== -->
+    <section class="report-page" id="page-acquisition" data-page="acquisition" hidden>
+      <div class="page-grid page-grid--with-rail">
+        <div class="page-main">
+
+          <div class="kpi-row kpi-row--3">
+            <div class="visual visual--mini">
+              <div class="visual__header"><span class="visual__title">Mobile</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body kpi-card kpi-card--mini">
+                <div class="kpi-value kpi-value--mini" id="kpiMobile">—</div>
+                <div class="kpi-caption">Overall conversion rate</div>
+              </div>
+            </div>
+            <div class="visual visual--mini">
+              <div class="visual__header"><span class="visual__title">Desktop</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body kpi-card kpi-card--mini">
+                <div class="kpi-value kpi-value--mini" id="kpiDesktop">—</div>
+                <div class="kpi-caption">Overall conversion rate</div>
+              </div>
+            </div>
+            <div class="visual visual--mini">
+              <div class="visual__header"><span class="visual__title">Tablet</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body kpi-card kpi-card--mini">
+                <div class="kpi-value kpi-value--mini" id="kpiTablet">—</div>
+                <div class="kpi-caption">Overall conversion rate</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-row chart-row--2">
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">Conversion Rate by Device</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body"><div class="chart-wrap"><canvas id="deviceConversionChart"></canvas></div></div>
+            </div>
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">Funnel Performance by Device</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body"><div class="chart-wrap"><canvas id="deviceFunnelChart"></canvas></div></div>
+            </div>
+          </div>
+
+          <div class="visual visual--insight">
+            <div class="visual__header"><span class="visual__title">Key Insight — Devices</span></div>
+            <div class="visual__body"><p class="insight-text" id="deviceInsight">Loading insight…</p></div>
+          </div>
+
+          <div class="chart-row chart-row--2">
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">Product Viewers by Traffic Source</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body"><div class="chart-wrap"><canvas id="trafficVolumeChart"></canvas></div></div>
+            </div>
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">Conversion Rate by Traffic Source</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body"><div class="chart-wrap"><canvas id="trafficConversionChart"></canvas></div></div>
+            </div>
+          </div>
+
+          <div class="visual visual--insight">
+            <div class="visual__header"><span class="visual__title">Key Insight — Traffic Volume vs. Traffic Quality</span></div>
+            <div class="visual__body"><p class="insight-text" id="trafficInsight">Loading insight…</p></div>
+          </div>
+
+        </div>
+
+        <aside class="page-rail">
+          <div class="visual visual--slicer">
+            <div class="visual__header"><span class="visual__title">Device</span><span class="visual__menu">&#8942;</span></div>
+            <div class="visual__body slicer-body" id="deviceSlicer">
+              <button class="slicer-item is-active" data-device="all">All</button>
+              <button class="slicer-item" data-device="mobile">Mobile</button>
+              <button class="slicer-item" data-device="desktop">Desktop</button>
+              <button class="slicer-item" data-device="tablet">Tablet</button>
+            </div>
+          </div>
+          <div class="visual visual--slicer">
+            <div class="visual__header"><span class="visual__title">Traffic Source</span><span class="visual__menu">&#8942;</span></div>
+            <div class="visual__body slicer-body" id="sourceSlicer">
+              <!-- populated dynamically -->
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 3 — PRODUCT ANALYSIS ===================== -->
+    <section class="report-page" id="page-product" data-page="product" hidden>
+      <div class="page-grid page-grid--with-rail">
+        <div class="page-main">
+
+          <div class="kpi-row kpi-row--4">
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">Flagged Products</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body kpi-card">
+                <div class="kpi-value" id="kpiFlagged">—</div>
+                <div class="kpi-caption">High-interest / low-conversion items</div>
+              </div>
+            </div>
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">Zero-Buyer Products</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body kpi-card">
+                <div class="kpi-value" id="kpiZeroBuyer">—</div>
+                <div class="kpi-caption">Flagged products with 0 buyers</div>
+              </div>
+            </div>
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">Total Revenue — Flagged</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body kpi-card">
+                <div class="kpi-value" id="kpiFlaggedRevenue">—</div>
+                <div class="kpi-caption">Sum of revenue, flagged set</div>
+              </div>
+            </div>
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">Average Conversion</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body kpi-card">
+                <div class="kpi-value" id="kpiAvgConversion">—</div>
+                <div class="kpi-caption">Mean conversion rate, flagged set</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-row chart-row--2">
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">High-Interest Products with Low Conversion</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body"><div class="chart-wrap chart-wrap--tall"><canvas id="highInterestChart"></canvas></div></div>
+            </div>
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">Interest vs Final Conversion</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body"><div class="chart-wrap chart-wrap--tall"><canvas id="scatterChart"></canvas></div></div>
+            </div>
+          </div>
+
+          <div class="chart-row chart-row--1">
+            <div class="visual">
+              <div class="visual__header"><span class="visual__title">Revenue Among Flagged Products</span><span class="visual__menu">&#8942;</span></div>
+              <div class="visual__body"><div class="chart-wrap"><canvas id="revenueChart"></canvas></div></div>
+            </div>
+          </div>
+
+          <div class="visual">
+            <div class="visual__header">
+              <span class="visual__title">Flagged Products — Detail</span>
+              <span class="visual__menu">&#8942;</span>
+            </div>
+            <div class="visual__body">
+              <div class="table-wrap">
+                <table class="bi-table" id="productTable">
+                  <thead>
+                    <tr>
+                      <th data-key="item_name" data-type="text">Product</th>
+                      <th data-key="viewers" data-type="num">Viewers</th>
+                      <th data-key="cart_users" data-type="num">Cart Users</th>
+                      <th data-key="buyers" data-type="num">Buyers</th>
+                      <th data-key="avg_price" data-type="num">Avg Price</th>
+                      <th data-key="revenue" data-type="num">Revenue</th>
+                      <th data-key="view_to_cart_rate" data-type="num">View → Cart</th>
+                      <th data-key="conversion_rate" data-type="num">Conversion</th>
+                    </tr>
+                  </thead>
+                  <tbody id="productTableBody">
+                    <tr><td colspan="8" class="table-loading">Loading products…</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="visual visual--insight">
+            <div class="visual__header"><span class="visual__title">Key Insight — Product Analysis</span></div>
+            <div class="visual__body"><p class="insight-text" id="productInsight">Loading insight…</p></div>
+          </div>
+
+        </div>
+
+        <aside class="page-rail">
+          <div class="visual visual--slicer">
+            <div class="visual__header"><span class="visual__title">Purchase Status</span><span class="visual__menu">&#8942;</span></div>
+            <div class="visual__body slicer-body" id="buyerSlicer">
+              <button class="slicer-item is-active" data-buyers="all">All products</button>
+              <button class="slicer-item" data-buyers="zero">Zero buyers</button>
+              <button class="slicer-item" data-buyers="some">Has buyers</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 4 — RETENTION & COHORTS ===================== -->
+    <section class="report-page" id="page-retention" data-page="retention" hidden>
+
+      <div class="kpi-row kpi-row--4">
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">D1 Retention</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body kpi-card"><div class="kpi-value" id="kpiD1">—</div><div class="kpi-caption">Returned 1 day after first visit</div></div>
+        </div>
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">D7 Retention</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body kpi-card"><div class="kpi-value" id="kpiD7">—</div><div class="kpi-caption">Returned 7 days after first visit</div></div>
+        </div>
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">D14 Retention</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body kpi-card"><div class="kpi-value" id="kpiD14">—</div><div class="kpi-caption">Returned 14 days after first visit</div></div>
+        </div>
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">D30 Retention</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body kpi-card"><div class="kpi-value" id="kpiD30">—</div><div class="kpi-caption">Returned 30 days after first visit</div></div>
+        </div>
+      </div>
+
+      <div class="chart-row chart-row--1">
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">Exact-Day User Retention</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body"><div class="chart-wrap"><canvas id="retentionChart"></canvas></div></div>
+        </div>
+      </div>
+
+      <div class="chart-row chart-row--1">
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">Monthly Cohort Retention</span><span class="visual__menu">&#8942;</span></div>
+          <div class="visual__body">
+            <div class="matrix-wrap" id="cohortMatrix"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual visual--insight">
+        <div class="visual__header"><span class="visual__title">Key Insight — Cohorts</span></div>
+        <div class="visual__body"><p class="insight-text" id="cohortInsight">Loading insight…</p></div>
+      </div>
+
+      <div class="chart-row chart-row--2">
+        <div class="visual">
+          <div class="visual__header"><span class="visual__title">Key Findings</span></div>
+          <div class="visual__body">
+            <ol class="findings-list" id="keyFindingsList">
+              <li>Loading…</li>
+            </ol>
+          </div>
+        </div>
+        <div class="visual visual--muted">
+          <div class="visual__header"><span class="visual__title">Research Limitations</span></div>
+          <div class="visual__body">
+            <ul class="limitations-list">
+              <li>Dataset covers Nov 2020 – Jan 2021.</li>
+              <li>Data are aggregated from BigQuery.</li>
+              <li>Initial funnel is based on unique users per event and does not enforce strict within-session event sequence.</li>
+              <li>Observed differences do not establish causality.</li>
+              <li>Product anomalies do not prove UX, price or stock issues.</li>
+              <li>Long-term retention is limited by the observation window.</li>
+              <li>January cohort cannot be evaluated at M1.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============ PAGE NAVIGATOR (Power BI-style page tabs) ============ -->
+  <nav class="page-nav" aria-label="Report pages">
+    <button class="page-tab is-active" data-target="overview" type="button">Executive Overview</button>
+    <button class="page-tab" data-target="acquisition" type="button">Acquisition &amp; Devices</button>
+    <button class="page-tab" data-target="product" type="button">Product Analysis</button>
+    <button class="page-tab" data-target="retention" type="button">Retention &amp; Cohorts</button>
+  </nav>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

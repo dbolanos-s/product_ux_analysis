@@ -1,0 +1,571 @@
+/* =========================================================================
+   Product & UX Analytics — report stylesheet
+   Visual language modeled on a published Power BI report: Fluent/Segoe UI
+   type, a neutral gray canvas, hairline-bordered "visual" containers with
+   a title + overflow-menu chrome, a bottom page navigator, and a right-hand
+   slicer rail. Chart colors follow a standard BI categorical palette.
+   ========================================================================= */
+
+:root{
+  /* ---- canvas & surfaces ---- */
+  --canvas-bg:      #F3F2F1;
+  --visual-bg:      #FFFFFF;
+  --visual-border:  #E1DFDD;
+  --header-bg:      #FFFFFF;
+  --rail-bg:        #FAF9F8;
+  --hover-bg:       #F3F9FF;
+  --grid-line:      #EDEBE9;
+
+  /* ---- text ---- */
+  --text-primary:   #252423;
+  --text-secondary: #605E5C;
+  --text-tertiary:  #8A8886;
+  --text-inverse:   #FFFFFF;
+
+  /* ---- brand / categorical data colors (standard BI theme) ---- */
+  --c-blue:        #118DFF;
+  --c-blue-dark:    #12239E;
+  --c-orange:       #E66C37;
+  --c-purple:       #6B007B;
+  --c-pink:         #E044A7;
+  --c-violet:       #744EC2;
+  --c-gold:         #D9B300;
+  --c-red:          #D64550;
+  --c-teal:         #197278;
+  --c-green:        #1AAB40;
+  --c-gray:         #8A8886;
+
+  /* ---- structure ---- */
+  --radius: 2px;
+  --shadow-visual: 0 0.3px 0.9px rgba(0,0,0,.11), 0 1.6px 3.6px rgba(0,0,0,.10);
+  --shadow-visual-hover: 0 0.6px 1.8px rgba(0,0,0,.13), 0 3.2px 7.2px rgba(0,0,0,.12);
+  --font: 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+html, body{ height:100%; }
+body{
+  margin:0;
+  font-family: var(--font);
+  background: var(--canvas-bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  font-size: 13px;
+}
+button{ font-family: inherit; }
+ol, ul{ margin:0; padding:0; }
+h1,h2,h3,p{ margin:0; }
+
+.app{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+/* =========================================================================
+   HEADER — Power BI Service report chrome
+   ========================================================================= */
+.report-header{
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--visual-border);
+  flex: 0 0 auto;
+}
+.report-header__top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 6px 20px;
+  border-bottom: 1px solid var(--grid-line);
+}
+.report-header__left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+.brand-mark{
+  flex: 0 0 auto;
+  width:18px; height:18px;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap:2px;
+}
+.brand-mark span{ display:block; border-radius:1px; }
+.brand-mark span:nth-child(1){ background: var(--c-blue); }
+.brand-mark span:nth-child(2){ background: var(--c-gold); }
+.brand-mark span:nth-child(3){ background: var(--c-teal); }
+.brand-mark span:nth-child(4){ background: var(--c-orange); }
+
+.report-breadcrumb{
+  font-size:12px;
+  color: var(--text-tertiary);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.report-breadcrumb b{ color: var(--text-secondary); font-weight:600; }
+
+.report-header__right{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex: 0 0 auto;
+}
+.refresh-stamp{
+  font-size:11px;
+  color: var(--text-tertiary);
+  margin-right:8px;
+  white-space:nowrap;
+}
+.tool-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:transparent;
+  border:1px solid transparent;
+  color: var(--text-secondary);
+  font-size:12px;
+  padding:5px 9px;
+  border-radius: var(--radius);
+  cursor:pointer;
+}
+.tool-btn:hover{ background:#F3F2F1; border-color: var(--visual-border); color: var(--text-primary); }
+.tool-icon{ width:13px; height:13px; fill: currentColor; }
+
+.report-header__titles{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+  padding: 12px 20px 14px;
+  flex-wrap:wrap;
+}
+.report-title{
+  font-size:20px;
+  font-weight:600;
+  letter-spacing:.4px;
+  color: var(--text-primary);
+}
+.report-subtitle{
+  margin-top:2px;
+  font-size:12.5px;
+  color: var(--text-secondary);
+  font-weight:600;
+}
+.report-desc{
+  font-size:11.5px;
+  color: var(--text-tertiary);
+  font-style: italic;
+  max-width:420px;
+  text-align:right;
+}
+
+/* =========================================================================
+   STATUS BANNER
+   ========================================================================= */
+.status-banner{
+  background:#FDF6F6;
+  border-bottom:1px solid #E8B4B4;
+  color:#8C2B2B;
+  font-size:12.5px;
+  padding:9px 20px;
+}
+.status-banner.is-warning{ background:#FFF8E5; border-color:#E8CE7A; color:#7A5B00; }
+
+/* =========================================================================
+   CANVAS + PAGES
+   ========================================================================= */
+.report-canvas{
+  flex: 1 1 auto;
+  padding: 14px 20px 28px;
+}
+.report-page{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.page-grid{ display:block; }
+.page-grid--with-rail{
+  display:grid;
+  grid-template-columns: 1fr 216px;
+  gap:12px;
+  align-items:start;
+}
+.page-main{ display:flex; flex-direction:column; gap:12px; min-width:0; }
+.page-rail{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  position: sticky;
+  top: 14px;
+}
+
+/* KPI rows */
+.kpi-row{ display:grid; gap:12px; }
+.kpi-row--5{ grid-template-columns: repeat(5, 1fr); }
+.kpi-row--4{ grid-template-columns: repeat(4, 1fr); }
+.kpi-row--3{ grid-template-columns: repeat(3, 1fr); }
+
+/* Chart rows */
+.chart-row{ display:grid; gap:12px; }
+.chart-row--1{ grid-template-columns: 1fr; }
+.chart-row--2{ grid-template-columns: 1fr 1fr; }
+.chart-row--funnel{ grid-template-columns: 1.05fr 1fr; }
+
+/* =========================================================================
+   VISUAL CONTAINER (the atomic Power BI "visual")
+   ========================================================================= */
+.visual{
+  background: var(--visual-bg);
+  border: 1px solid var(--visual-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-visual);
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  transition: box-shadow .12s ease;
+}
+.visual:hover{ box-shadow: var(--shadow-visual-hover); }
+
+.visual__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 8px 10px 6px 12px;
+  flex: 0 0 auto;
+}
+.visual__title{
+  font-size:12px;
+  font-weight:600;
+  color: var(--text-primary);
+  letter-spacing:.1px;
+}
+.visual__menu{
+  color: var(--text-tertiary);
+  font-size:14px;
+  line-height:1;
+  cursor:default;
+  padding:2px 4px;
+  border-radius:2px;
+}
+.visual__menu:hover{ background: var(--canvas-bg); }
+
+.visual__body{
+  padding: 4px 14px 14px;
+  flex: 1 1 auto;
+  min-width:0;
+}
+
+.visual--insight{
+  background: var(--hover-bg);
+  border-left: 3px solid var(--c-blue);
+}
+.visual--insight .visual__body{ padding-top:0; }
+.visual--muted{ background:#FBFBFA; }
+
+.insight-text{
+  font-size:12.5px;
+  line-height:1.6;
+  color: var(--text-primary);
+}
+.insight-text b{ color: var(--c-blue-dark); font-weight:700; }
+
+/* =========================================================================
+   KPI CARDS
+   ========================================================================= */
+.kpi-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:4px;
+  min-height:64px;
+}
+.kpi-value{
+  font-size:28px;
+  font-weight:600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height:1.1;
+}
+.kpi-card--accent .kpi-value{ color: var(--c-blue); }
+.kpi-caption{
+  font-size:11px;
+  color: var(--text-tertiary);
+}
+.visual--mini .visual__body.kpi-card{ min-height:48px; }
+.kpi-value--mini{ font-size:22px; }
+
+/* =========================================================================
+   CHART CANVAS WRAPPERS
+   ========================================================================= */
+.chart-wrap{ position:relative; height:260px; width:100%; }
+.chart-wrap--tall{ height:340px; }
+
+/* =========================================================================
+   FUNNEL VISUAL (custom trapezoid funnel, Power BI "Funnel" visual look)
+   ========================================================================= */
+.funnel-chart{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding: 6px 4px 2px;
+}
+.funnel-stage-wrap{
+  width:100%;
+  display:grid;
+  grid-template-columns: 1fr 190px;
+  align-items:center;
+  gap:14px;
+}
+.funnel-stage{
+  height:56px;
+  background: var(--stage-color, var(--c-blue));
+  margin: 0 auto;
+  width:100%;
+}
+.funnel-stage-info{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+}
+.funnel-stage-name{ font-size:12px; font-weight:600; color: var(--text-primary); }
+.funnel-stage-value{ font-size:15px; font-weight:700; font-variant-numeric: tabular-nums; color: var(--text-primary); }
+.funnel-stage-pct{ font-size:11px; color: var(--text-tertiary); }
+.funnel-connector{
+  width:100%;
+  text-align:center;
+  font-size:10.5px;
+  color: var(--c-red);
+  font-weight:600;
+  padding: 2px 0;
+}
+.funnel-connector .arrow{ color: var(--text-tertiary); margin-right:4px; }
+
+/* =========================================================================
+   SLICERS (right rail)
+   ========================================================================= */
+.visual--slicer .visual__body{ padding-bottom:10px; }
+.slicer-body{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.slicer-item{
+  text-align:left;
+  background: var(--canvas-bg);
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-size:11.5px;
+  padding:6px 9px;
+  border-radius:2px;
+  cursor:pointer;
+}
+.slicer-item:hover{ background:#E9EEF7; }
+.slicer-item.is-active{
+  background: var(--c-blue);
+  color:#fff;
+  font-weight:600;
+}
+
+/* =========================================================================
+   TABLE (Power BI "Table" visual)
+   ========================================================================= */
+.table-wrap{ overflow-x:auto; }
+.bi-table{
+  width:100%;
+  border-collapse: collapse;
+  font-size:12px;
+}
+.bi-table thead th{
+  text-align:right;
+  font-weight:600;
+  color: var(--text-secondary);
+  border-bottom: 2px solid #D7D5D3;
+  padding: 7px 10px;
+  white-space:nowrap;
+  cursor:pointer;
+  user-select:none;
+  position:relative;
+}
+.bi-table thead th[data-type="text"]{ text-align:left; }
+.bi-table thead th:hover{ color: var(--text-primary); background: var(--canvas-bg); }
+.bi-table thead th.is-sorted::after{
+  content: attr(data-arrow);
+  margin-left:5px;
+  color: var(--c-blue);
+}
+.bi-table tbody td{
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--grid-line);
+  text-align:right;
+  white-space:nowrap;
+  color: var(--text-primary);
+}
+.bi-table tbody td[data-type="text"]{ text-align:left; }
+.bi-table tbody tr:hover{ background: var(--hover-bg); }
+.bi-table tbody tr.is-zero-buyer{ background:#FDF3F2; }
+.bi-table tbody tr.is-zero-buyer:hover{ background:#FBE6E4; }
+.bi-table tbody tr.is-zero-buyer td:first-child{ border-left:3px solid var(--c-red); padding-left:7px; }
+.table-loading{ text-align:center !important; color: var(--text-tertiary); padding:18px !important; }
+
+/* =========================================================================
+   COHORT MATRIX (heatmap, Power BI "Matrix" + conditional formatting)
+   ========================================================================= */
+.matrix-wrap{ overflow-x:auto; }
+.matrix{
+  border-collapse: collapse;
+  font-size:12px;
+  min-width:420px;
+}
+.matrix th, .matrix td{
+  padding:9px 16px;
+  text-align:center;
+  border: 1px solid #fff;
+}
+.matrix thead th{
+  background:#E1E5EA;
+  color: var(--text-secondary);
+  font-weight:600;
+  font-size:11.5px;
+}
+.matrix tbody th{
+  background:#F3F2F1;
+  color: var(--text-primary);
+  font-weight:600;
+  text-align:left;
+  font-size:12px;
+}
+.matrix td{
+  font-variant-numeric: tabular-nums;
+  font-weight:600;
+  color:#12233F;
+}
+.matrix td.is-empty{
+  color: var(--text-tertiary);
+  font-weight:400;
+  background:#FAFAFA !important;
+}
+.matrix td.is-base{
+  background:#E9E8E7 !important;
+  color: var(--text-secondary);
+}
+
+/* =========================================================================
+   FINDINGS / LIMITATIONS
+   ========================================================================= */
+.findings-list{
+  list-style:none;
+  counter-reset: finding;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+.findings-list li{
+  counter-increment: finding;
+  font-size:12.5px;
+  line-height:1.5;
+  color: var(--text-primary);
+  padding-left:24px;
+  position:relative;
+}
+.findings-list li::before{
+  content: counter(finding);
+  position:absolute;
+  left:0; top:0;
+  width:17px; height:17px;
+  border-radius:2px;
+  background: var(--c-blue);
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.limitations-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.limitations-list li{
+  font-size:11.5px;
+  line-height:1.5;
+  color: var(--text-secondary);
+  padding-left:14px;
+  position:relative;
+}
+.limitations-list li::before{
+  content:"–";
+  position:absolute;
+  left:0;
+  color: var(--text-tertiary);
+}
+
+/* =========================================================================
+   PAGE NAVIGATOR (bottom tabs, Power BI page navigation)
+   ========================================================================= */
+.page-nav{
+  flex: 0 0 auto;
+  display:flex;
+  gap:2px;
+  background: #EDEBE9;
+  border-top: 1px solid var(--visual-border);
+  padding: 0 16px;
+  overflow-x:auto;
+}
+.page-tab{
+  background: transparent;
+  border: none;
+  border-top: 2px solid transparent;
+  color: var(--text-secondary);
+  font-size:12px;
+  font-weight:600;
+  padding: 10px 16px 9px;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.page-tab:hover{ color: var(--text-primary); background: rgba(255,255,255,.5); }
+.page-tab.is-active{
+  background: var(--visual-bg);
+  color: var(--c-blue-dark);
+  border-top-color: var(--c-blue);
+}
+
+/* =========================================================================
+   CHART.JS TOOLTIP OVERRIDE (used via JS options, kept here for reference)
+   ========================================================================= */
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+@media (max-width: 1180px){
+  .kpi-row--5{ grid-template-columns: repeat(3, 1fr); }
+  .kpi-row--4{ grid-template-columns: repeat(2, 1fr); }
+  .chart-row--2, .chart-row--funnel{ grid-template-columns: 1fr; }
+  .page-grid--with-rail{ grid-template-columns: 1fr; }
+  .page-rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .page-rail .visual{ flex:1 1 220px; }
+  .funnel-stage-wrap{ grid-template-columns: 1fr 150px; }
+  .report-header__titles{ flex-direction:column; align-items:flex-start; }
+  .report-desc{ text-align:left; }
+}
+
+@media (max-width: 720px){
+  .kpi-row--5, .kpi-row--4, .kpi-row--3{ grid-template-columns: 1fr 1fr; }
+  .report-canvas{ padding: 10px 10px 22px; }
+  .report-header__top{ padding: 6px 12px; }
+  .report-header__titles{ padding: 10px 12px 12px; }
+  .refresh-stamp{ display:none; }
+  .funnel-stage-wrap{ grid-template-columns: 1fr 120px; gap:8px; }
+  .funnel-stage-name{ font-size:11px; }
+  .funnel-stage-value{ font-size:13px; }
+}
+
+@media (max-width: 480px){
+  .kpi-row--5, .kpi-row--4, .kpi-row--3{ grid-template-columns: 1fr; }
+}
